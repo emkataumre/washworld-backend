@@ -3,12 +3,13 @@ import { CreateHallDto } from './dto/create-hall.dto';
 import { UpdateHallDto } from './dto/update-hall.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Hall } from './entities/hall.entity';
 
 @Injectable()
 export class HallsService {
   constructor(
-    @InjectRepository(Location)
-    private balanceRepository: Repository<Location>,
+    @InjectRepository(Hall)
+    private hallsRepository: Repository<Hall>,
   ) {}
   create(createHallDto: CreateHallDto) {
     return 'This action adds a new hall';

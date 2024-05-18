@@ -9,7 +9,7 @@ import { Status } from './entities/status.entity';
 export class StatusesService {
   constructor(
     @InjectRepository(Status)
-    private balanceRepository: Repository<Status>,
+    private statusRepository: Repository<Status>,
   ) {}
   create(createStatusDto: CreateStatusDto) {
     return 'This action adds a new status';
