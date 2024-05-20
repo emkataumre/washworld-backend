@@ -11,6 +11,7 @@ export class LocationsService {
     @InjectRepository(Location)
     private locationsRepository: Repository<Location>,
   ) {}
+
   create(createLocationDto: CreateLocationDto) {
     return 'This action adds a new location';
   }
