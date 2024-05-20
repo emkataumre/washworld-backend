@@ -1,5 +1,12 @@
 import { Hall } from 'src/halls/entities/hall.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToMany,
+} from 'typeorm';
 
 @Entity()
 export class Location {
@@ -23,4 +30,7 @@ export class Location {
 
   @OneToMany(() => Hall, (hall: Hall) => hall.location)
   halls: Hall[];
+
+  @ManyToMany(() => User, (user) => user.locations)
+  users: User[];
 }
