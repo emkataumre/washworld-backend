@@ -1,3 +1,4 @@
+import { Package } from 'src/packages/entities/package.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Entity,
@@ -7,7 +8,7 @@ import {
   OneToOne,
 } from 'typeorm';
 
-@Entity('memberships')
+@Entity()
 export class Membership {
   @PrimaryGeneratedColumn()
   membership_id: number;
@@ -22,6 +23,7 @@ export class Membership {
   @JoinColumn()
   user: User;
 
-  //   @ManyToMany(() => User, (user) => user.memberships)
-  //   users: User[];
+  @OneToOne(() => Package, (_package) => _package.membership)
+  @JoinColumn()
+  package: Package;
 }

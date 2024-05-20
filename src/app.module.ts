@@ -8,6 +8,8 @@ import { StatusesModule } from './statuses/statuses.module';
 import { UsersModule } from './users/users.module';
 import { MembershipsModule } from './memberships/memberships.module';
 import { CarsModule } from './cars/cars.module';
+import { PackagesModule } from './packages/packages.module';
+import { FeaturesModule } from './features/features.module';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { CarsModule } from './cars/cars.module';
     UsersModule,
     MembershipsModule,
     CarsModule,
+    PackagesModule,
+    FeaturesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
