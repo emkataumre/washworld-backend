@@ -10,7 +10,7 @@ import {
   ManyToMany,
 } from 'typeorm';
 
-@Entity()
+@Entity('packages')
 export class Package {
   @PrimaryGeneratedColumn()
   package_id: number;
@@ -26,6 +26,6 @@ export class Package {
   membership: Membership;
 
   @ManyToMany(() => Feature, (feature) => feature.packages)
-  @JoinTable()
+  @JoinTable({ name: 'package_features' })
   features: Feature[];
 }

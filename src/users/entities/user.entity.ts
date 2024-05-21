@@ -10,7 +10,7 @@ import {
   OneToOne,
 } from 'typeorm';
 
-@Entity()
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   user_id: number;
@@ -33,7 +33,7 @@ export class User {
   membership: Membership;
 
   @ManyToMany(() => Location, (location) => location.users)
-  @JoinTable()
+  @JoinTable({ name: 'users_locations' })
   locations: Location[];
 
   @OneToOne(() => Car, (car) => car.user)

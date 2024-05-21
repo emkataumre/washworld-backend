@@ -8,7 +8,7 @@ import {
   OneToOne,
 } from 'typeorm';
 
-@Entity()
+@Entity('memberships')
 export class Membership {
   @PrimaryGeneratedColumn()
   membership_id: number;

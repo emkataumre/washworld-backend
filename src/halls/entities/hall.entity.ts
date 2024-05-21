@@ -8,7 +8,7 @@ import {
 import { Location } from '../../locations/entities/location.entity';
 import { Status } from 'src/statuses/entities/status.entity';
 
-@Entity()
+@Entity('halls')
 export class Hall {
   @PrimaryGeneratedColumn()
   hall_id: number;

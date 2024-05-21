@@ -8,7 +8,7 @@ import {
   ManyToMany,
 } from 'typeorm';
 
-@Entity()
+@Entity('locations')
 export class Location {
   @PrimaryGeneratedColumn()
   location_id: number;
