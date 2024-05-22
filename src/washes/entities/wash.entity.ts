@@ -16,7 +16,7 @@ export class Wash {
   wash_id: number;
 
   @Column()
-  isMembershipWash: boolean;
+  is_membership_wash: boolean;
 
   @Column()
   date: Date;
