@@ -1,5 +1,6 @@
 import { Hall } from 'src/halls/entities/hall.entity';
 import { User } from 'src/users/entities/user.entity';
+import { Wash } from 'src/washes/entities/wash.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -33,4 +34,7 @@ export class Location {
 
   @ManyToMany(() => User, (user) => user.locations)
   users: User[];
+
+  @OneToMany(() => Wash, (wash: Wash) => wash.location)
+  washes: Wash[];
 }
