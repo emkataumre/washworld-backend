@@ -1,6 +1,7 @@
 import { Car } from 'src/cars/entities/car.entity';
 import { Location } from 'src/locations/entities/location.entity';
 import { Membership } from 'src/memberships/entities/membership.entity';
+import { Wash } from 'src/washes/entities/wash.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,6 +9,7 @@ import {
   JoinTable,
   ManyToMany,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('users')
@@ -38,6 +40,9 @@ export class User {
 
   @OneToOne(() => Car, (car) => car.user)
   car: Car;
+
+  @OneToMany(() => Wash, (wash) => wash.user)
+  washes: Wash[];
 
   //   @ManyToMany(() => Membership, (membership) => membership.users)
   //   @JoinTable()

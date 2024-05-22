@@ -1,4 +1,4 @@
-import { Package } from 'src/packages/entities/package.entity';
+import { WashPackage } from 'src/packages/entities/package.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Entity,
@@ -23,7 +23,7 @@ export class Membership {
   @JoinColumn()
   user: User;
 
-  @OneToOne(() => Package, (_package) => _package.membership)
+  @OneToOne(() => WashPackage, (wash_package) => wash_package.membership)
   @JoinColumn()
-  package: Package;
+  package: WashPackage;
 }

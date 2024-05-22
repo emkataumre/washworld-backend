@@ -10,6 +10,7 @@ import { MembershipsModule } from './memberships/memberships.module';
 import { CarsModule } from './cars/cars.module';
 import { PackagesModule } from './packages/packages.module';
 import { FeaturesModule } from './features/features.module';
+import { WashesModule } from './washes/washes.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { FeaturesModule } from './features/features.module';
     CarsModule,
     PackagesModule,
     FeaturesModule,
+    WashesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

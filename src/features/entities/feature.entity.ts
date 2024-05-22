@@ -1,4 +1,4 @@
-import { Package } from 'src/packages/entities/package.entity';
+import { WashPackage } from 'src/packages/entities/package.entity';
 import {
   ManyToMany,
   JoinTable,
@@ -18,6 +18,6 @@ export class Feature {
   @Column()
   feature_description: string;
 
-  @ManyToMany(() => Package, (_package) => _package.features)
-  packages: Package[];
+  @ManyToMany(() => WashPackage, (wash_package) => wash_package.features)
+  packages: WashPackage[];
 }
