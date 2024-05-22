@@ -40,13 +40,7 @@ export class CarsService {
   }
 
   async findOne(car_id: number, user_id: number) {
-    const car = await this.carsRepository.findOne({
-      where: {
-        car_id: car_id,
-        user: { user_id: user_id },
-      },
-      relations: ['user'],
-    });
+    const car = await this.findCar(car_id, user_id);
 
     if (!car) {
       throw new Error('Car not found');
@@ -55,20 +49,32 @@ export class CarsService {
     return car;
   }
 
-  update(id: number, updateCarDto: UpdateCarDto) {
-    return `This action updates a #${id} car`;
+  async update(user_id: number, car_id: number, updateCarDto: UpdateCarDto) {
+    const car = await this.findCar(car_id, user_id);
+
+    if (!car) {
+      throw new Error('Car not found');
+    }
+
+    await this.carsRepository.update(car_id, updateCarDto);
   }
 
   async remove(user_id: number, car_id: number) {
-    const car = await this.carsRepository.findOne({
-      where: { car_id: car_id, user: { user_id: user_id } },
-      relations: ['user'],
-    });
+    const car = await this.findCar(car_id, user_id);
 
     if (!car) {
       throw new Error('Car not found');
     }
 
     await this.carsRepository.delete(car);
+  }
+
+  //Methods
+
+  private async findCar(car_id: number, user_id: number) {
+    return this.carsRepository.findOne({
+      where: { car_id: car_id, user: { user_id: user_id } },
+      relations: ['user'],
+    });
   }
 }

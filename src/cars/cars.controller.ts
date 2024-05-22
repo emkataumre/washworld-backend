@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
 } from '@nestjs/common';
@@ -33,9 +33,13 @@ export class CarsController {
     return this.carsService.findOne(+car_id, +user_id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCarDto: UpdateCarDto) {
-    return this.carsService.update(+id, updateCarDto);
+  @Put(':id')
+  update(
+    @Param('id') id: string,
+    @Body('user_id') user_id: number,
+    @Body() updateCarDto: UpdateCarDto,
+  ) {
+    return this.carsService.update(user_id, +id, updateCarDto);
   }
 
   @Delete(':car_id/:user_id')
