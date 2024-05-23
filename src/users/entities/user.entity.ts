@@ -28,23 +28,37 @@ export class User {
   @Column()
   birthday: Date;
 
-  @Column()
-  closing_time: string;
-
-  @OneToOne(() => Membership, (membership) => membership.user)
-  membership: Membership;
-
   @ManyToMany(() => Location, (location) => location.users)
-  @JoinTable({ name: 'users_locations' })
+  @JoinTable({
+    name: 'users_locations',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'user_id',
+    },
+    inverseJoinColumn: {
+      name: 'location_id',
+      referencedColumnName: 'location_id',
+    },
+  })
   locations: Location[];
 
   @OneToOne(() => Car, (car) => car.user)
   car: Car;
 
-  @OneToMany(() => Wash, (wash) => wash.user)
-  washes: Wash[];
+  @ManyToMany(() => Membership, (membership) => membership.users)
+  @JoinTable({
+    name: 'users_memberships',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'user_id',
+    },
+    inverseJoinColumn: {
+      name: 'membership_id',
+      referencedColumnName: 'membership_id',
+    },
+  })
+  memberships: Membership[];
 
-  //   @ManyToMany(() => Membership, (membership) => membership.users)
-  //   @JoinTable()
-  //   memberships: Membership[];
+  @OneToMany(() => Wash, (wash: Wash) => wash.user)
+  washes: Wash[];
 }

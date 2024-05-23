@@ -5,7 +5,6 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  JoinColumn,
   OneToOne,
   JoinTable,
   ManyToMany,
@@ -13,7 +12,7 @@ import {
 } from 'typeorm';
 
 @Entity('packages')
-export class WashPackage {
+export class Package {
   @PrimaryGeneratedColumn()
   package_id: number;
 
@@ -23,14 +22,23 @@ export class WashPackage {
   @Column('decimal', { precision: 5, scale: 2 })
   package_price: number;
 
-  @OneToMany(() => Wash, (wash) => wash.package)
-  washes: Wash[];
-
   @OneToOne(() => Membership, (membership) => membership.package)
-  @JoinColumn()
   membership: Membership;
 
   @ManyToMany(() => Feature, (feature) => feature.packages)
-  @JoinTable({ name: 'package_features' })
+  @JoinTable({
+    name: 'package_features',
+    joinColumn: {
+      name: 'package_id',
+      referencedColumnName: 'package_id',
+    },
+    inverseJoinColumn: {
+      name: 'feature_id',
+      referencedColumnName: 'feature_id',
+    },
+  })
   features: Feature[];
+
+  @OneToMany(() => Wash, (wash: Wash) => wash.package)
+  washes: Wash[];
 }

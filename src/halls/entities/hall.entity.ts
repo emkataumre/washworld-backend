@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -23,8 +24,10 @@ export class Hall {
   max_rim_size: number;
 
   @ManyToOne(() => Location, (location: Location) => location.halls)
+  @JoinColumn({ name: 'location_id' })
   location: Location;
 
-  @OneToMany(() => Status, (status: Status) => status.hall)
-  tastuses: Status[];
+  @ManyToOne(() => Status, (status: Status) => status.halls)
+  @JoinColumn({ name: 'status_id' })
+  status: Status;
 }

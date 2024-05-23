@@ -35,6 +35,6 @@ export class Location {
   @ManyToMany(() => User, (user) => user.locations)
   users: User[];
 
-  @OneToMany(() => Wash, (wash) => wash.location)
+  @OneToMany(() => Wash, (wash: Wash) => wash.location)
   washes: Wash[];
 }

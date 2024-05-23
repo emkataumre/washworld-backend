@@ -1,5 +1,6 @@
 import { Hall } from 'src/halls/entities/hall.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Selfwash } from 'src/selfwashes/entities/selfwash.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class Status {
@@ -9,6 +10,9 @@ export class Status {
   @Column()
   status: string;
 
-  @ManyToOne(() => Hall, (hall: Hall) => hall.statuses)
-  hall: Hall;
+  @OneToMany(() => Hall, (hall: Hall) => hall.status)
+  halls: Hall[];
+
+  @OneToMany(() => Selfwash, (selfwash: Selfwash) => selfwash.status)
+  selfwashes: Selfwash[];
 }
