@@ -28,7 +28,7 @@ export class CarsService {
       user, // link the car to the user
     });
 
-    return this.carsRepository.save(newCar);
+    return await this.carsRepository.save(newCar);
   }
 
   async findAll(user_id: number) {

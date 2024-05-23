@@ -1,7 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { WashesService } from './washes.service';
 import { CreateWashDto } from './dto/create-wash.dto';
-import { UpdateWashDto } from './dto/update-wash.dto';
 
 @Controller('washes')
 export class WashesController {
@@ -17,18 +24,8 @@ export class WashesController {
     return this.washesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.washesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWashDto: UpdateWashDto) {
-    return this.washesService.update(+id, updateWashDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.washesService.remove(+id);
+  @Get(':wash_id')
+  findOne(@Param('id') wash_id: number) {
+    return this.washesService.findOne(wash_id);
   }
 }

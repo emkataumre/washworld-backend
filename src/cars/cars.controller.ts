@@ -27,26 +27,26 @@ export class CarsController {
 
   @Get(':car_id/:user_id')
   async findOne(
-    @Param('car_id') car_id: string,
-    @Param('user_id') user_id: string,
+    @Param('car_id') car_id: number,
+    @Param('user_id') user_id: number,
   ) {
-    return this.carsService.findOne(+car_id, +user_id);
+    return this.carsService.findOne(car_id, user_id);
   }
 
-  @Put(':id')
+  @Put(':car_id')
   update(
-    @Param('id') id: string,
+    @Param('car_id') car_id: number,
     @Body('user_id') user_id: number,
     @Body() updateCarDto: UpdateCarDto,
   ) {
-    return this.carsService.update(user_id, +id, updateCarDto);
+    return this.carsService.update(user_id, car_id, updateCarDto);
   }
 
   @Delete(':car_id/:user_id')
   async remove(
-    @Param('car_id') car_id: string,
-    @Param('user_id') user_id: string,
+    @Param('car_id') car_id: number,
+    @Param('user_id') user_id: number,
   ) {
-    return this.carsService.remove(+car_id, +user_id);
+    return this.carsService.remove(car_id, user_id);
   }
 }

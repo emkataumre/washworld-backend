@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateWashDto } from './dto/create-wash.dto';
-import { UpdateWashDto } from './dto/update-wash.dto';
+import { Wash } from './entities/wash.entity';
 
 @Injectable()
 export class WashesService {
-  create(createWashDto: CreateWashDto) {
-    return 'This action adds a new wash';
+  constructor(
+    @InjectRepository(Wash)
+    private readonly washesRepository: Repository<Wash>,
+  ) {}
+
+  async create(createWashDto: CreateWashDto) {
+    const wash = this.washesRepository.create(createWashDto);
+    return await this.washesRepository.save(wash);
   }
 
-  findAll() {
-    return `This action returns all washes`;
+  async findAll() {
+    const allWashes = await this.washesRepository.find({});
+    return allWashes;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} wash`;
-  }
-
-  update(id: number, updateWashDto: UpdateWashDto) {
-    return `This action updates a #${id} wash`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} wash`;
+  async findOne(wash_id: number) {
+    const wash = await this.washesRepository.findOne({ where: { wash_id } });
+    if (!wash) {
+      throw new Error('Wash not found');
+    }
+    return wash;
   }
 }
