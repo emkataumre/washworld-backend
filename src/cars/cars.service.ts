@@ -14,7 +14,7 @@ export class CarsService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  async create(createCarDto: CreateCarDto) {
+  async create(createCarDto: CreateCarDto): Promise<Car> {
     const user = await this.usersRepository.findOne({
       where: { user_id: createCarDto.user_id },
     });
@@ -31,7 +31,7 @@ export class CarsService {
     return await this.carsRepository.save(newCar);
   }
 
-  async findAll(user_id: number) {
+  async findAll(user_id: number): Promise<Car[]> {
     const allCars = await this.carsRepository.find({
       where: { user: { user_id: user_id } },
       relations: ['user'], // ensures the user relation is loaded
@@ -39,7 +39,7 @@ export class CarsService {
     return allCars;
   }
 
-  async findOne(car_id: number, user_id: number) {
+  async findOne(car_id: number, user_id: number): Promise<Car> {
     const car = await this.findCar(car_id, user_id);
 
     if (!car) {
@@ -49,7 +49,11 @@ export class CarsService {
     return car;
   }
 
-  async update(user_id: number, car_id: number, updateCarDto: UpdateCarDto) {
+  async update(
+    user_id: number,
+    car_id: number,
+    updateCarDto: UpdateCarDto,
+  ): Promise<void> {
     const car = await this.findCar(car_id, user_id);
 
     if (!car) {
@@ -59,7 +63,7 @@ export class CarsService {
     await this.carsRepository.update(car_id, updateCarDto);
   }
 
-  async remove(user_id: number, car_id: number) {
+  async remove(user_id: number, car_id: number): Promise<void> {
     const car = await this.findCar(car_id, user_id);
 
     if (!car) {
@@ -71,7 +75,10 @@ export class CarsService {
 
   //Methods
 
-  private async findCar(car_id: number, user_id: number) {
+  private async findCar(
+    car_id: number,
+    user_id: number,
+  ): Promise<Car | undefined> {
     return this.carsRepository.findOne({
       where: { car_id: car_id, user: { user_id: user_id } },
       relations: ['user'],

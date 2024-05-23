@@ -26,5 +26,5 @@ export class Hall {
   location: Location;
 
   @OneToMany(() => Status, (status: Status) => status.hall)
-  statuses: Status[];
+  tastuses: Status[];
 }

@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateLocationDto } from './dto/create-location.dto';
-import { UpdateLocationDto } from './dto/update-location.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Location } from './entities/location.entity';
@@ -12,23 +10,16 @@ export class LocationsService {
     private locationsRepository: Repository<Location>,
   ) {}
 
-  create(createLocationDto: CreateLocationDto) {
-    return 'This action adds a new location';
+  async findAll(): Promise<Location[]> {
+    const allLocations: Location[] = await this.locationsRepository.find({});
+    return allLocations;
   }
 
-  findAll() {
-    return `This action returns all locations`;
-  }
+  async findOne(location_id: number): Promise<Location | undefined> {
+    const loctation: Location = await this.locationsRepository.findOne({
+      where: { location_id },
+    });
 
-  findOne(id: number) {
-    return `This action returns a #${id} location`;
-  }
-
-  update(id: number, updateLocationDto: UpdateLocationDto) {
-    return `This action updates a #${id} location`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} location`;
+    return loctation;
   }
 }
