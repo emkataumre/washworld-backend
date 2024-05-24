@@ -1,33 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { CreateHallDto } from './dto/create-hall.dto';
-import { UpdateHallDto } from './dto/update-hall.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Hall } from './entities/hall.entity';
+import { LocationsService } from 'src/locations/locations.service';
 
 @Injectable()
 export class HallsService {
   constructor(
     @InjectRepository(Hall)
     private hallsRepository: Repository<Hall>,
+    private locationsService: LocationsService,
   ) {}
-  create(createHallDto: CreateHallDto) {
-    return 'This action adds a new hall';
+
+  async findAll() {
+    const allHalls = await this.hallsRepository.find({});
+    return allHalls;
   }
 
-  findAll() {
-    return `This action returns all halls`;
+  async findOne(hall_id: number) {
+    const hall = await this.hallsRepository.findOne({
+      where: { hall_id: hall_id },
+    });
+    return hall;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} hall`;
+  async findAllForLocation(location_id: number): Promise<Hall[]> {
+    const location = await this.locationsService.findOne(location_id);
+    const allHalls = location.halls;
+    return allHalls;
   }
 
-  update(id: number, updateHallDto: UpdateHallDto) {
-    return `This action updates a #${id} hall`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} hall`;
+  async findOneForLocation(
+    location_id: number,
+    hall_id: number,
+  ): Promise<Hall> {
+    const location = await this.locationsService.findOne(location_id);
+    const hall = location.halls.find((hall) => hall.hall_id === hall_id);
+    return hall;
   }
 }
