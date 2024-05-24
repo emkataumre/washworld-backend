@@ -25,16 +25,21 @@ export class HallsService {
   }
 
   async findAllForLocation(location_id: number): Promise<Hall[]> {
-    const location = await this.locationsService.findOne(location_id);
-    const allHalls = location.halls;
-    return allHalls;
+    const location = await this.locationsService.findOne({
+      where: { location_id },
+      relations: ['halls'], //used to load relations outside of the location table, by default relations are not loaded for better performance
+    });
+    return location.halls;
   }
 
   async findOneForLocation(
     location_id: number,
     hall_id: number,
   ): Promise<Hall> {
-    const location = await this.locationsService.findOne(location_id);
+    const location = await this.locationsService.findOne({
+      where: { location_id },
+      relations: ['halls'], //used to load relations outside of the location table, by default relations are not loaded for better performance
+    });
     const hall = location.halls.find((hall) => hall.hall_id === hall_id);
     return hall;
   }
