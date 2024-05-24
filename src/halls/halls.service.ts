@@ -33,7 +33,7 @@ export class HallsService {
     const hallsWithStatus = await Promise.all(
       location.halls.map(async (hall) => {
         const status = await this.findOne(hall.hall_id);
-        return { ...hall, status };
+        return { ...hall, status_id: status.status.status_id };
       }),
     );
 
