@@ -12,16 +12,15 @@ export class HallsService {
     private locationsService: LocationsService,
   ) {}
 
-  async findAll() {
-    const allHalls = await this.hallsRepository.find({});
-    return allHalls;
+  async findAll(): Promise<Hall[]> {
+    return this.hallsRepository.find({ relations: ['status'] });
   }
 
-  async findOne(hall_id: number) {
-    const hall = await this.hallsRepository.findOne({
-      where: { hall_id: hall_id },
+  async findOne(hall_id: number): Promise<Hall> {
+    return this.hallsRepository.findOne({
+      where: { hall_id },
+      relations: ['status'],
     });
-    return hall;
   }
 
   async findAllForLocation(location_id: number): Promise<Hall[]> {
