@@ -12,5 +12,6 @@ import { HallsModule } from 'src/halls/halls.module';
     TypeOrmModule.forFeature([Location]),
     forwardRef(() => HallsModule),
   ],
+  exports: [LocationsService],
 })
 export class LocationsModule {}

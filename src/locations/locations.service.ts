@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { Location } from './entities/location.entity';
 
 @Injectable()
@@ -15,11 +15,10 @@ export class LocationsService {
     return allLocations;
   }
 
-  async findOne(location_id: number): Promise<Location | undefined> {
-    const loctation: Location = await this.locationsRepository.findOne({
-      where: { location_id },
-    });
-
-    return loctation;
+  async findOne(
+    options: FindOneOptions<Location>,
+  ): Promise<Location | undefined> {
+    const location: Location = await this.locationsRepository.findOne(options);
+    return location;
   }
 }
