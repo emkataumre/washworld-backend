@@ -16,10 +16,6 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  @IsString()
-  confirm_password: string;
-
-  @IsNotEmpty()
   birthday: Date;
 
   constructor(
@@ -34,7 +30,6 @@ export class CreateUserDto {
     this.last_name = last_name;
     this.email = email;
     this.password = password;
-    this.confirm_password = confirm_password;
     this.birthday = birthday;
   }
 }

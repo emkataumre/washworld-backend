@@ -19,18 +19,8 @@ export class AuthService {
   ) {}
 
   async signUp(createUserDto: CreateUserDto): Promise<User> {
-    const {
-      first_name,
-      last_name,
-      email,
-      password,
-      confirm_password,
-      birthday,
-    } = createUserDto;
+    const { first_name, last_name, email, password, birthday } = createUserDto;
 
-    if (password !== confirm_password) {
-      throw new UnauthorizedException();
-    }
     try {
       const existingUser = await this.usersService.findOneByEmail(email);
       if (existingUser) {
@@ -44,7 +34,6 @@ export class AuthService {
           last_name,
           email,
           password: hashedPassword,
-          confirm_password: hashedPassword,
           birthday,
         });
         return newUser;
@@ -62,6 +51,7 @@ export class AuthService {
       if (!user) {
         throw new UnauthorizedException('User not found');
       }
+
       const isPasswordMatching = await bcrypt.compare(pass, user.password);
       if (!isPasswordMatching) {
         throw new UnauthorizedException('Invalid credentials');
@@ -70,13 +60,13 @@ export class AuthService {
       console.log(result);
       return result;
     } catch (error) {
-      // Handle or log the error
       console.error(error);
       throw new InternalServerErrorException(
         'An error occurred while validating the user',
       );
     }
   }
+
   async signIn(signInDto: SignInDto): Promise<any> {
     console.log('auth service sign in', signInDto);
     const { email, password } = signInDto;
@@ -84,6 +74,9 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
+
+    console.log(password, user.password);
+
     const isPasswordMatching = await bcrypt.compare(password, user.password);
     if (!isPasswordMatching) {
       throw new UnauthorizedException();
