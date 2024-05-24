@@ -24,10 +24,10 @@ export class Location {
   longitude: number;
 
   @Column()
-  opening_time: string;
+  opening_times: string;
 
   @Column()
-  closing_time: string;
+  closing_times: string;
 
   @OneToMany(() => Hall, (hall: Hall) => hall.location)
   halls: Hall[];

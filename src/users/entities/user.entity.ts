@@ -26,6 +26,9 @@ export class User {
   email: string;
 
   @Column()
+  password: string;
+
+  @Column()
   birthday: Date;
 
   @ManyToMany(() => Location, (location) => location.users)
