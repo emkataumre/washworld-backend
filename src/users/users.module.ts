@@ -16,6 +16,6 @@ import { LocationsModule } from 'src/locations/locations.module';
     forwardRef(() => LocationsModule),
     forwardRef(() => CarsModule),
   ],
-  exports: [TypeOrmModule], //fixes circular dependency with cars.module
+  exports: [UsersService, TypeOrmModule], //fixes circular dependency with cars.module
 })
 export class UsersModule {}
