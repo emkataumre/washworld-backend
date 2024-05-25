@@ -1,26 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMembershipDto } from './dto/create-membership.dto';
-import { UpdateMembershipDto } from './dto/update-membership.dto';
+import { Membership } from './entities/membership.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UsersService } from 'src/users/users.service';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class MembershipsService {
-  create(createMembershipDto: CreateMembershipDto) {
-    return 'This action adds a new membership';
+  constructor(
+    @InjectRepository(Membership)
+    private membershipsRepository: Repository<Membership>,
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) {}
+
+  async findAllForUser(user_id: number): Promise<Membership[]> {
+    const user = await this.usersRepository.findOne({
+      where: { user_id },
+      relations: ['memberships'],
+    });
+
+    return user.memberships;
   }
 
-  findAll() {
-    return `This action returns all memberships`;
-  }
+  async findOneForUser(
+    user_id: number,
+    membership_id: number,
+  ): Promise<Membership> {
+    const user = await this.usersRepository.findOne({
+      where: { user_id },
+      relations: ['memberships'],
+    });
 
-  findOne(id: number) {
-    return `This action returns a #${id} membership`;
-  }
+    const membership = user.memberships.find(
+      (membership) => membership.membership_id == membership_id,
+    );
 
-  update(id: number, updateMembershipDto: UpdateMembershipDto) {
-    return `This action updates a #${id} membership`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} membership`;
+    return membership;
   }
 }
