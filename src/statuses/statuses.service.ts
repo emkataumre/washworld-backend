@@ -14,10 +14,6 @@ export class StatusesService {
     @InjectRepository(Hall) private hallsRepo: Repository<Hall>,
   ) {}
 
-  async findAll(): Promise<Status[]> {
-    return await this.statusRepository.find({});
-  }
-
   async findStatusByHallId(hall_id: number): Promise<Status> {
     const hall = await this.hallsService.findOne(hall_id);
     return hall.status;
