@@ -1,33 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStatusDto } from './dto/create-status.dto';
-import { UpdateStatusDto } from './dto/update-status.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Status } from './entities/status.entity';
+import { HallsService } from 'src/halls/halls.service';
+import { Hall } from 'src/halls/entities/hall.entity';
 
 @Injectable()
 export class StatusesService {
   constructor(
     @InjectRepository(Status)
-    private statusRepository: Repository<Status>,
+    private hallsService: HallsService,
+    @InjectRepository(Hall) private hallsRepo: Repository<Hall>,
   ) {}
-  create(createStatusDto: CreateStatusDto) {
-    return 'This action adds a new status';
+
+  async findStatusByHallId(hall_id: number): Promise<Status> {
+    const hall = await this.hallsService.findOne(hall_id);
+    return hall.status;
   }
 
-  findAll() {
-    return `This action returns all statuses`;
+  async findAllStatusesWithHalls(): Promise<Status[]> {
+    const halls = await this.hallsService.findAll();
+    console.log(halls);
+    return halls.map((hall) => hall.status);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} status`;
-  }
-
-  update(id: number, updateStatusDto: UpdateStatusDto) {
-    return `This action updates a #${id} status`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} status`;
+  async updateStatus(
+    hall_id: number,
+    newStatus: Partial<Status>, // Partial means all fields are marked as optional (?)
+  ): Promise<Status> {
+    const hall = await this.hallsService.findOne(hall_id);
+    hall.status = { ...hall.status, ...newStatus };
+    await this.hallsRepo.save(hall);
+    return hall.status;
   }
 }

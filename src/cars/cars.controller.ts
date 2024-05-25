@@ -20,8 +20,8 @@ export class CarsController {
     return this.carsService.create(createCarDto);
   }
 
-  @Get()
-  findAll(user_id: number) {
+  @Get(':user_id')
+  findAll(@Param('user_id') user_id: number) {
     return this.carsService.findAll(user_id);
   }
 

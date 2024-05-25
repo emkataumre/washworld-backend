@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFeatureDto } from './dto/create-feature.dto';
-import { UpdateFeatureDto } from './dto/update-feature.dto';
+import { Feature } from './entities/feature.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Package } from 'src/packages/entities/package.entity';
 
 @Injectable()
 export class FeaturesService {
-  create(createFeatureDto: CreateFeatureDto) {
-    return 'This action adds a new feature';
+  constructor(
+    @InjectRepository(Package)
+    private packagesRepository: Repository<Package>,
+  ) {}
+
+  async findAllForPackage(package_id: number): Promise<Feature[]> {
+    const _package = await this.packagesRepository.findOne({
+      where: { package_id },
+      relations: ['features'],
+    });
+
+    return _package.features;
   }
 
-  findAll() {
-    return `This action returns all features`;
-  }
+  async findOneForPackge(package_id: number, feature_id: number) {
+    const _package = await this.packagesRepository.findOne({
+      where: { package_id },
+      relations: ['features'],
+    });
 
-  findOne(id: number) {
-    return `This action returns a #${id} feature`;
-  }
+    const feature = _package.features.find(
+      (feature) => feature.feature_id == feature_id,
+    );
 
-  update(id: number, updateFeatureDto: UpdateFeatureDto) {
-    return `This action updates a #${id} feature`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} feature`;
+    return feature;
   }
 }

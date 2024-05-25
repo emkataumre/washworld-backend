@@ -1,34 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { HallsService } from './halls.service';
-import { CreateHallDto } from './dto/create-hall.dto';
-import { UpdateHallDto } from './dto/update-hall.dto';
 
 @Controller('halls')
 export class HallsController {
   constructor(private readonly hallsService: HallsService) {}
 
-  @Post()
-  create(@Body() createHallDto: CreateHallDto) {
-    return this.hallsService.create(createHallDto);
+  @Get(':location_id')
+  findAllForLocation(@Param('location_id') location_id: number) {
+    return this.hallsService.findAllForLocation(location_id);
   }
 
-  @Get()
-  findAll() {
-    return this.hallsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.hallsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHallDto: UpdateHallDto) {
-    return this.hallsService.update(+id, updateHallDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.hallsService.remove(+id);
+  @Get(':location_id/:hall_id')
+  findOneForLocation(
+    @Param('location_id') location_id: number,
+    @Param('hall_id') hall_id: number,
+  ) {
+    return this.hallsService.findOneForLocation(location_id, hall_id);
   }
 }

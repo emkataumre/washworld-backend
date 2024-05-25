@@ -1,26 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePackageDto } from './dto/create-package.dto';
-import { UpdatePackageDto } from './dto/update-package.dto';
+import { Package } from './entities/package.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Membership } from 'src/memberships/entities/membership.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PackagesService {
-  create(createPackageDto: CreatePackageDto) {
-    return 'This action adds a new package';
-  }
+  constructor(
+    @InjectRepository(Membership)
+    private membershipRepository: Repository<Membership>,
+  ) {}
 
-  findAll() {
-    return `This action returns all packages`;
-  }
+  async findOneForMembership(membership_id: number): Promise<Package> {
+    const membership = await this.membershipRepository.findOne({
+      where: { membership_id },
+      relations: ['package'],
+    });
 
-  findOne(id: number) {
-    return `This action returns a #${id} package`;
-  }
-
-  update(id: number, updatePackageDto: UpdatePackageDto) {
-    return `This action updates a #${id} package`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} package`;
+    return membership.package;
   }
 }

@@ -25,7 +25,6 @@ export class Membership {
   users: User[];
 
   @OneToOne(() => Car, (car) => car.membership)
-  @JoinColumn({ name: 'car_id' })
   car: Car;
 
   @OneToOne(() => Package, (_package) => _package.membership)

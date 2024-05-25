@@ -23,6 +23,7 @@ export class Car {
   user: User;
 
   @OneToOne(() => Membership, (membership) => membership.car)
+  @JoinColumn({ name: 'membership_id' })
   membership: Membership;
 
   @OneToMany(() => Wash, (wash: Wash) => wash.car)
