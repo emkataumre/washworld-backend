@@ -4,6 +4,7 @@ import { LocationsController } from './locations.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Location } from './entities/location.entity';
 import { HallsModule } from 'src/halls/halls.module';
+import { SelfwashesModule } from 'src/selfwashes/selfwashes.module';
 
 @Module({
   controllers: [LocationsController],
@@ -11,6 +12,7 @@ import { HallsModule } from 'src/halls/halls.module';
   imports: [
     TypeOrmModule.forFeature([Location]),
     forwardRef(() => HallsModule),
+    forwardRef(() => SelfwashesModule),
   ],
   exports: [LocationsService],
 })

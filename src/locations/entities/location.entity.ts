@@ -1,4 +1,5 @@
 import { Hall } from 'src/halls/entities/hall.entity';
+import { Selfwash } from 'src/selfwashes/entities/selfwash.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Wash } from 'src/washes/entities/wash.entity';
 import {
@@ -31,6 +32,9 @@ export class Location {
 
   @OneToMany(() => Hall, (hall: Hall) => hall.location)
   halls: Hall[];
+
+  @OneToMany(() => Selfwash, (selfwash: Selfwash) => selfwash.location)
+  selfwashes: Selfwash[];
 
   @ManyToMany(() => User, (user) => user.locations)
   users: User[];

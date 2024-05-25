@@ -1,20 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
 import { SelfwashesService } from './selfwashes.service';
-import { CreateSelfwashDto } from './dto/create-selfwash.dto';
 import { UpdateSelfwashDto } from './dto/update-selfwash.dto';
 
 @Controller('selfwashes')
 export class SelfwashesController {
   constructor(private readonly selfwashesService: SelfwashesService) {}
 
-  @Post()
-  create(@Body() createSelfwashDto: CreateSelfwashDto) {
-    return this.selfwashesService.create(createSelfwashDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.selfwashesService.findAll();
+  @Get(':location_id')
+  findAll(@Param('location_id') location_id: number) {
+    return this.selfwashesService.findAllForLocation(location_id);
   }
 
   @Get(':id')
@@ -23,7 +17,10 @@ export class SelfwashesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSelfwashDto: UpdateSelfwashDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateSelfwashDto: UpdateSelfwashDto,
+  ) {
     return this.selfwashesService.update(+id, updateSelfwashDto);
   }
 
