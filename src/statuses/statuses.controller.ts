@@ -12,6 +12,11 @@ export class StatusesController {
   }
 
   @Get()
+  findAll() {
+    return this.statusesService.findAll();
+  }
+
+  @Get()
   findAllStatusesWithHalls() {
     return this.statusesService.findAllStatusesWithHalls();
   }
