@@ -30,7 +30,7 @@ export class AuthController {
     return this.authService.signUp(createUserDto);
   }
 
-  @UseGuards(JwtAuthGuard, AbortController)
+  @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;
