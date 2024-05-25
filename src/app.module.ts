@@ -5,6 +5,14 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HallsModule } from './halls/halls.module';
 import { StatusesModule } from './statuses/statuses.module';
+import { UsersModule } from './users/users.module';
+import { MembershipsModule } from './memberships/memberships.module';
+import { CarsModule } from './cars/cars.module';
+import { PackagesModule } from './packages/packages.module';
+import { FeaturesModule } from './features/features.module';
+import { SelfwashesModule } from './selfwashes/selfwashes.module';
+import { WashesModule } from './washes/washes.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +33,14 @@ import { StatusesModule } from './statuses/statuses.module';
     }),
     HallsModule,
     StatusesModule,
+    UsersModule,
+    MembershipsModule,
+    CarsModule,
+    PackagesModule,
+    FeaturesModule,
+    SelfwashesModule,
+    WashesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

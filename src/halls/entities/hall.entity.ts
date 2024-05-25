@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -8,7 +9,7 @@ import {
 import { Location } from '../../locations/entities/location.entity';
 import { Status } from 'src/statuses/entities/status.entity';
 
-@Entity()
+@Entity('halls')
 export class Hall {
   @PrimaryGeneratedColumn()
   hall_id: number;
@@ -23,8 +24,10 @@ export class Hall {
   max_rim_size: number;
 
   @ManyToOne(() => Location, (location: Location) => location.halls)
+  @JoinColumn({ name: 'location_id' })
   location: Location;
 
-  @OneToMany(() => Status, (status: Status) => status.hall)
-  statuses: Status[];
+  @ManyToOne(() => Status, (status: Status) => status.halls)
+  @JoinColumn({ name: 'status_id' })
+  status: Status;
 }

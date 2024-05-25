@@ -1,7 +1,15 @@
 import { Hall } from 'src/halls/entities/hall.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { Wash } from 'src/washes/entities/wash.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToMany,
+} from 'typeorm';
 
-@Entity()
+@Entity('locations')
 export class Location {
   @PrimaryGeneratedColumn()
   location_id: number;
@@ -9,18 +17,24 @@ export class Location {
   @Column()
   address: string;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 9, scale: 6 })
   latitude: number;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 9, scale: 6 })
   longitude: number;
 
   @Column()
-  opening_time: string;
+  opening_times: string;
 
   @Column()
-  closing_time: string;
+  closing_times: string;
 
   @OneToMany(() => Hall, (hall: Hall) => hall.location)
   halls: Hall[];
+
+  @ManyToMany(() => User, (user) => user.locations)
+  users: User[];
+
+  @OneToMany(() => Wash, (wash: Wash) => wash.location)
+  washes: Wash[];
 }
