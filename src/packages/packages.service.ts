@@ -1,12 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { Package } from './entities/package.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Membership } from 'src/memberships/entities/membership.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PackagesService {
-  findAll() {
-    return `This action returns all packages`;
-  }
+  constructor(
+    @InjectRepository(Membership)
+    private membershipRepository: Repository<Membership>,
+  ) {}
 
-  findOne(id: number) {
-    return `This action returns a #${id} package`;
+  async findOneForMembership(
+    membership_id: number,
+    package_id,
+  ): Promise<Package> {
+    const membership = await this.membershipRepository.findOne({
+      where: { membership_id },
+      relations: ['package'],
+    });
+
+    return membership.package;
   }
 }

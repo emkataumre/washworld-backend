@@ -5,13 +5,11 @@ import { PackagesService } from './packages.service';
 export class PackagesController {
   constructor(private readonly packagesService: PackagesService) {}
 
-  @Get()
-  findAll() {
-    return this.packagesService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.packagesService.findOne(+id);
+  @Get(':membership_id/:package_id')
+  findOne(
+    @Param('membership_id') membership_id: number,
+    @Param('package_id') package_id: number,
+  ) {
+    return this.packagesService.findOneForMembership(membership_id, package_id);
   }
 }
