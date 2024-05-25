@@ -20,7 +20,6 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async signIn(@Body() signInDto: SignInDto) {
-    console.log('signIn endpoint hit', signInDto);
     return this.authService.signIn(signInDto);
   }
 

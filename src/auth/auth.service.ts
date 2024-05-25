@@ -10,6 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from 'src/users/entities/user.entity';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { SignInDto } from './dto/signIn.dto';
+import { Role } from 'src/roles/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -35,6 +36,7 @@ export class AuthService {
           email,
           password: hashedPassword,
           birthday,
+          roles: [Role.User],
         });
         return newUser;
       } else {
@@ -68,22 +70,19 @@ export class AuthService {
   }
 
   async signIn(signInDto: SignInDto): Promise<any> {
-    console.log('auth service sign in', signInDto);
     const { email, password } = signInDto;
     const user = await this.usersService.findOneByEmail(email);
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
 
-    console.log(password, user.password);
-
     const isPasswordMatching = await bcrypt.compare(password, user.password);
     if (!isPasswordMatching) {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: user.user_id, email: user.email };
-    console.log('singin payload', payload);
+    const { password: userPassword, ...userWithoutPassword } = user;
+    const payload = { sub: user.user_id, user: userWithoutPassword };
     return {
       access_token: await this.jwtService.sign(payload),
     };

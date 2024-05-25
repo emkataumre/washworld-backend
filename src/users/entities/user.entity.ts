@@ -1,6 +1,7 @@
 import { Car } from 'src/cars/entities/car.entity';
 import { Location } from 'src/locations/entities/location.entity';
 import { Membership } from 'src/memberships/entities/membership.entity';
+import { Role } from 'src/roles/role.enum';
 import { Wash } from 'src/washes/entities/wash.entity';
 import {
   Entity,
@@ -30,6 +31,9 @@ export class User {
 
   @Column()
   birthday: Date;
+
+  @Column('enum', { enum: Role, array: true })
+  roles: Role[];
 
   @ManyToMany(() => Location, (location) => location.users)
   @JoinTable({
