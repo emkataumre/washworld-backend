@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   HttpCode,
-  HttpException,
   HttpStatus,
   Post,
   Request,
@@ -12,8 +11,6 @@ import {
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { SignInDto } from './dto/signIn.dto';
-import { LocalAuthGuard } from './local-auth.guard';
-import { AuthGuard } from './auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
@@ -21,7 +18,6 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @HttpCode(HttpStatus.OK)
-  // @UseGuards(LocalAuthGuard)
   @Post('login')
   async signIn(@Body() signInDto: SignInDto) {
     console.log('signIn endpoint hit', signInDto);
