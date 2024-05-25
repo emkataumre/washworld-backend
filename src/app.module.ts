@@ -12,6 +12,7 @@ import { PackagesModule } from './packages/packages.module';
 import { FeaturesModule } from './features/features.module';
 import { SelfwashesModule } from './selfwashes/selfwashes.module';
 import { WashesModule } from './washes/washes.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { WashesModule } from './washes/washes.module';
     FeaturesModule,
     SelfwashesModule,
     WashesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
