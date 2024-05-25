@@ -11,10 +11,7 @@ export class PackagesService {
     private membershipRepository: Repository<Membership>,
   ) {}
 
-  async findOneForMembership(
-    membership_id: number,
-    package_id,
-  ): Promise<Package> {
+  async findOneForMembership(membership_id: number): Promise<Package> {
     const membership = await this.membershipRepository.findOne({
       where: { membership_id },
       relations: ['package'],

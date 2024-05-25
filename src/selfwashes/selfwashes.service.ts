@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UpdateSelfwashDto } from './dto/update-selfwash.dto';
 import { Selfwash } from './entities/selfwash.entity';
 import { LocationsService } from 'src/locations/locations.service';
 
@@ -38,13 +37,5 @@ export class SelfwashesService {
       where: { selfwash_id },
       relations: ['status'],
     });
-  }
-
-  update(id: number, updateSelfwashDto: UpdateSelfwashDto) {
-    return `This action updates a #${id} selfwash`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} selfwash`;
   }
 }

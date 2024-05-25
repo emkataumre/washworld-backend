@@ -9,7 +9,6 @@ import { Hall } from 'src/halls/entities/hall.entity';
 export class StatusesService {
   constructor(
     @InjectRepository(Status)
-    private statusRepository: Repository<Status>,
     private hallsService: HallsService,
     @InjectRepository(Hall) private hallsRepo: Repository<Hall>,
   ) {}

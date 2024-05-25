@@ -6,10 +6,7 @@ export class PackagesController {
   constructor(private readonly packagesService: PackagesService) {}
 
   @Get(':membership_id/:package_id')
-  findOne(
-    @Param('membership_id') membership_id: number,
-    @Param('package_id') package_id: number,
-  ) {
-    return this.packagesService.findOneForMembership(membership_id, package_id);
+  findOne(@Param('membership_id') membership_id: number) {
+    return this.packagesService.findOneForMembership(membership_id);
   }
 }

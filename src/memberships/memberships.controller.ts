@@ -11,7 +11,7 @@ export class MembershipsController {
   }
 
   @Get(':user_id/:membership_id')
-  findOne(
+  findOneForUser(
     @Param('user_id') user_id: number,
     @Param('membership_id') membership_id: number,
   ) {
