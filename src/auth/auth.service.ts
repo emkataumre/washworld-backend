@@ -21,7 +21,7 @@ export class AuthService {
     private membershipsService: MembershipsService,
   ) {}
 
-  async signUp(createUserDto: CreateUserDto): Promise<User> {
+  async signUp(createUserDto: CreateUserDto): Promise<any> {
     const { first_name, last_name, email, password, birthday } = createUserDto;
 
     try {
@@ -41,7 +41,18 @@ export class AuthService {
           roles: [Role.User],
           memberships: null,
         });
-        return newUser;
+
+        const membership = await this.membershipsService.findAllForUser(
+          newUser.user_id,
+        );
+        const { password: userPassword, ...userWithoutPassword } = newUser;
+        const userWithMembership = { ...userWithoutPassword, membership };
+
+        const payload = { sub: newUser.user_id, user: userWithMembership };
+        return {
+          access_token: await this.jwtService.sign(payload),
+          user: userWithMembership,
+        };
       } else {
         console.log(error);
         throw error;
