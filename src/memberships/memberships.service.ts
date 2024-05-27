@@ -13,13 +13,23 @@ export class MembershipsService {
     private usersRepository: Repository<User>,
   ) {}
 
+  async findAll(): Promise<Membership[]> {
+    const memberships = await this.membershipsRepository.find();
+    return memberships;
+  }
+
   async findAllForUser(user_id: number): Promise<Membership[]> {
     const user = await this.usersRepository.findOne({
       where: { user_id },
       relations: ['memberships'],
     });
 
-    return user.memberships;
+    const memberships = user.memberships.map((membership) => ({
+      ...membership,
+      membership_price: Number(membership.membership_price),
+    }));
+
+    return memberships;
   }
 
   async findOneForUser(
@@ -31,9 +41,16 @@ export class MembershipsService {
       relations: ['memberships'],
     });
 
-    const membership = user.memberships.find(
+    let membership = user.memberships.find(
       (membership) => membership.membership_id == membership_id,
     );
+
+    if (membership) {
+      membership = {
+        ...membership,
+        membership_price: Number(membership.membership_price),
+      };
+    }
 
     return membership;
   }

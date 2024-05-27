@@ -11,12 +11,14 @@ import { User } from 'src/users/entities/user.entity';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { SignInDto } from './dto/signIn.dto';
 import { Role } from 'src/roles/role.enum';
+import { MembershipsService } from 'src/memberships/memberships.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private membershipsService: MembershipsService,
   ) {}
 
   async signUp(createUserDto: CreateUserDto): Promise<User> {
@@ -37,6 +39,7 @@ export class AuthService {
           password: hashedPassword,
           birthday,
           roles: [Role.User],
+          memberships: null,
         });
         return newUser;
       } else {
@@ -71,7 +74,9 @@ export class AuthService {
 
   async signIn(signInDto: SignInDto): Promise<any> {
     const { email, password } = signInDto;
-    const user = await this.usersService.findOneByEmail(email);
+    const user = await this.usersService.findOneByEmail(
+      email.toLocaleLowerCase(),
+    );
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
@@ -81,11 +86,20 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
+    const membership = await this.membershipsService.findAllForUser(
+      user.user_id,
+    );
+
+    console.log(membership);
+
     const { password: userPassword, ...userWithoutPassword } = user;
-    const payload = { sub: user.user_id, user: userWithoutPassword };
+    const userWithMembership = { ...userWithoutPassword, membership };
+
+    console.log(userWithMembership);
+    const payload = { sub: user.user_id, user: userWithMembership };
     return {
       access_token: await this.jwtService.sign(payload),
-      user: userWithoutPassword,
+      user: userWithMembership,
     };
   }
 }

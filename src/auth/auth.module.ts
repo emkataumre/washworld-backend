@@ -7,11 +7,13 @@ import { LocalStrategy } from './local.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { ConfigService } from '@nestjs/config';
+import { MembershipsModule } from 'src/memberships/memberships.module';
 
 @Module({
   imports: [
     PassportModule,
     forwardRef(() => UsersModule),
+    MembershipsModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({

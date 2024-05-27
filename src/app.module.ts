@@ -13,6 +13,7 @@ import { FeaturesModule } from './features/features.module';
 import { SelfwashesModule } from './selfwashes/selfwashes.module';
 import { WashesModule } from './washes/washes.module';
 import { AuthModule } from './auth/auth.module';
+import { MembershipPackageFeaturesModule } from './membership-package-features/membership-package-features.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { AuthModule } from './auth/auth.module';
     SelfwashesModule,
     WashesModule,
     AuthModule,
+    MembershipPackageFeaturesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

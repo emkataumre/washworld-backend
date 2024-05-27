@@ -5,6 +5,11 @@ import { MembershipsService } from './memberships.service';
 export class MembershipsController {
   constructor(private readonly membershipsService: MembershipsService) {}
 
+  @Get()
+  findAll() {
+    return this.membershipsService.findAll();
+  }
+
   @Get(':user_id')
   findAllForUser(@Param('user_id') user_id: number) {
     return this.membershipsService.findAllForUser(user_id);
