@@ -9,9 +9,10 @@ export const dbConfig: TypeOrmModuleOptions & DataSourceOptions = {
   port: +process.env.DB_PORT,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  database:
+    process.env.NODE_ENV === 'test' ? 'washworld_test' : process.env.DB_NAME,
   autoLoadEntities: true,
-  synchronize: false, // Setting synchronize: true shouldn't be used in production - otherwise you can lose production data.
+  synchronize: true, // Setting synchronize: true shouldn't be used in production - otherwise you can lose production data.
   entities: ['dist/**/*.entity{.ts,.js}'], // This is the path to our entities ([User, Location, Car, Membership, Wash, Hall, Status, Package, Feature, Selfwash, MembershipPackageFeature])
   migrations: ['dist/migrations/*{.ts,.js}'], // This is the path to our migrations (migrations/1717075638272-CreatedTables.ts)
 };

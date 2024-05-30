@@ -105,4 +105,14 @@ export class UsersService {
       });
     }
   }
+
+  async saveDamageReport(user_id: number, damageReport: string): Promise<void> {
+    const user: User = await this.findUser(user_id);
+    if (user.damage_report) {
+      user.damage_report.push(damageReport);
+    } else {
+      user.damage_report = [damageReport];
+    }
+    await this.usersRepository.save(user);
+  }
 }

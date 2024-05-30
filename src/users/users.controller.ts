@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,6 +19,14 @@ export class UsersController {
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
+  }
+
+  @Post(':userId/damageReport')
+  async addDamageReport(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Body('damageReport') damageReport: string,
+  ) {
+    return this.usersService.saveDamageReport(userId, damageReport);
   }
 
   @Post(':user_id/:location_id')

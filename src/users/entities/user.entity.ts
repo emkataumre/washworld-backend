@@ -39,6 +39,9 @@ export class User {
   @Column({ default: false })
   newsletter_opt_in: boolean; // This defines a default value for the newsletter_opt_in column.
 
+  @Column({ type: 'text', nullable: true })
+  damage_report: string[]; // Column for storing base64 encoded image data
+
   @ManyToMany(() => Location, (location) => location.users)
   @JoinTable({
     name: 'users_locations',
