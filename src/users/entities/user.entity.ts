@@ -20,6 +20,7 @@ export class User {
 
   @Column()
   first_name: string;
+
   @Column()
   last_name: string;
 
@@ -34,6 +35,9 @@ export class User {
 
   @Column('enum', { enum: Role, array: true })
   roles: Role[];
+
+  @Column({ default: false })
+  newsletter_opt_in: boolean; // This defines a default value for the newsletter_opt_in column.
 
   @ManyToMany(() => Location, (location) => location.users)
   @JoinTable({
