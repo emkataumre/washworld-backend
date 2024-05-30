@@ -23,6 +23,7 @@ export class AuthService {
 
   async signUp(createUserDto: CreateUserDto): Promise<any> {
     const { first_name, last_name, email, password, birthday } = createUserDto;
+    const lowercaseEmail = email.toLowerCase();
 
     try {
       const existingUser = await this.usersService.findOneByEmail(email);
@@ -35,7 +36,7 @@ export class AuthService {
         const newUser = await this.usersService.create({
           first_name,
           last_name,
-          email,
+          email: lowercaseEmail,
           password: hashedPassword,
           birthday,
           roles: [Role.User],
@@ -63,7 +64,7 @@ export class AuthService {
   async validateUser(email: string, pass: string): Promise<any> {
     try {
       console.log(email, pass, 'validateUser');
-      const user = await this.usersService.findOneByEmail(email);
+      const user = await this.usersService.findOneByEmail(email.toLowerCase());
       if (!user) {
         throw new UnauthorizedException('User not found');
       }

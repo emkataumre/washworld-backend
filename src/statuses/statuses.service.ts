@@ -19,7 +19,6 @@ export class StatusesService {
 
   async findAllStatusesWithHalls(): Promise<Status[]> {
     const halls = await this.hallsService.findAll();
-    console.log(halls);
     return halls.map((hall) => hall.status);
   }
 
