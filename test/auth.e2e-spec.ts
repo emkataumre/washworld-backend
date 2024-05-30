@@ -3,7 +3,7 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { Role } from 'src/roles/role.enum';
-import { Connection, getConnection } from 'typeorm';
+import { Connection } from 'typeorm';
 
 describe('AuthController (e2e)', () => {
   let app;

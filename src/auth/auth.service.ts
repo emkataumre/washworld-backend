@@ -45,7 +45,8 @@ export class AuthService {
         const membership = await this.membershipsService.findAllForUser(
           newUser.user_id,
         );
-        const { password: userPassword, ...userWithoutPassword } = newUser;
+        const userWithoutPassword = { ...newUser };
+        delete userWithoutPassword.password;
         const userWithMembership = { ...userWithoutPassword, membership };
 
         const payload = { sub: newUser.user_id, user: userWithMembership };
@@ -70,7 +71,8 @@ export class AuthService {
       if (!isPasswordMatching) {
         throw new UnauthorizedException('Invalid credentials');
       }
-      const { password, ...result } = user;
+      const result = { ...user };
+      delete result.password;
       return result;
     } catch (error) {
       throw new InternalServerErrorException(
@@ -97,7 +99,8 @@ export class AuthService {
       user.user_id,
     );
 
-    const { password: userPassword, ...userWithoutPassword } = user;
+    const userWithoutPassword = { ...user };
+    delete userWithoutPassword.password;
     const userWithMembership = { ...userWithoutPassword, membership };
 
     const payload = { sub: user.user_id, user: userWithMembership };

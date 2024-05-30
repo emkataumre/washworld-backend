@@ -46,7 +46,6 @@ export class UsersService {
   }
 
   async remove(user_id: number): Promise<void> {
-    const user = await this.findUser(user_id);
     await this.usersRepository.delete(user_id);
     return;
   }
