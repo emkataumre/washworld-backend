@@ -45,4 +45,5 @@ jobs:
       - name: Run E2E tests
         run: npm run test:e2e
         env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           DATABASE_URL: postgres://testuser:testpassword@localhost:5432/testdb
