@@ -1,6 +1,7 @@
 import { Car } from 'src/cars/entities/car.entity';
 import { Location } from 'src/locations/entities/location.entity';
 import { Membership } from 'src/memberships/entities/membership.entity';
+import { Role } from 'src/roles/role.enum';
 import { Wash } from 'src/washes/entities/wash.entity';
 import {
   Entity,
@@ -19,6 +20,7 @@ export class User {
 
   @Column()
   first_name: string;
+
   @Column()
   last_name: string;
 
@@ -30,6 +32,15 @@ export class User {
 
   @Column()
   birthday: Date;
+
+  @Column('enum', { enum: Role, array: true })
+  roles: Role[];
+
+  @Column({ default: false })
+  newsletter_opt_in: boolean; // This defines a default value for the newsletter_opt_in column.
+
+  @Column({ type: 'text', nullable: true })
+  damage_report: string[]; // Column for storing base64 encoded image data
 
   @ManyToMany(() => Location, (location) => location.users)
   @JoinTable({

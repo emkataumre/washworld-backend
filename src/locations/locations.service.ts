@@ -21,4 +21,11 @@ export class LocationsService {
     const location: Location = await this.locationsRepository.findOne(options);
     return location;
   }
+
+  async findOneLocation(location_id: number): Promise<Location> {
+    const location: Location = await this.locationsRepository.findOne({
+      where: { location_id },
+    });
+    return location;
+  }
 }
