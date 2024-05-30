@@ -7,7 +7,6 @@ import {
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { User } from 'src/users/entities/user.entity';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { SignInDto } from './dto/signIn.dto';
 import { Role } from 'src/roles/role.enum';
@@ -55,7 +54,6 @@ export class AuthService {
           user: userWithMembership,
         };
       } else {
-        console.log(error);
         throw error;
       }
     }
@@ -63,7 +61,6 @@ export class AuthService {
 
   async validateUser(email: string, pass: string): Promise<any> {
     try {
-      console.log(email, pass, 'validateUser');
       const user = await this.usersService.findOneByEmail(email.toLowerCase());
       if (!user) {
         throw new UnauthorizedException('User not found');
@@ -74,10 +71,8 @@ export class AuthService {
         throw new UnauthorizedException('Invalid credentials');
       }
       const { password, ...result } = user;
-      console.log(result);
       return result;
     } catch (error) {
-      console.error(error);
       throw new InternalServerErrorException(
         'An error occurred while validating the user',
       );
@@ -102,12 +97,9 @@ export class AuthService {
       user.user_id,
     );
 
-    console.log(membership);
-
     const { password: userPassword, ...userWithoutPassword } = user;
     const userWithMembership = { ...userWithoutPassword, membership };
 
-    console.log(userWithMembership);
     const payload = { sub: user.user_id, user: userWithMembership };
     return {
       access_token: await this.jwtService.sign(payload),
