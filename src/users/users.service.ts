@@ -4,12 +4,15 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import { LocationsService } from 'src/locations/locations.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+
+    private locationsService: LocationsService,
   ) {}
   async create(createUserDto: CreateUserDto): Promise<User> {
     const user: User = this.usersRepository.create(createUserDto);
@@ -56,5 +59,50 @@ export class UsersService {
       throw new Error('User not found');
     }
     return user;
+  }
+
+  async addFavoriteLocation(
+    user_id: number,
+    location_id: number,
+  ): Promise<void> {
+    const user = await this.usersRepository.findOne({
+      where: { user_id },
+      relations: ['locations'],
+    });
+    const location = await this.locationsService.findOneLocation(location_id);
+
+    if (user && location) {
+      user.locations.push(location);
+      await this.usersRepository.save(user);
+    }
+  }
+
+  async findAllFavoriteLocations(user_id: number): Promise<any> {
+    const user = await this.usersRepository.findOne({
+      where: { user_id },
+      relations: ['locations'],
+    });
+
+    return user.locations;
+  }
+
+  async removeFavoriteLocation(
+    user_id: number,
+    location_id: number,
+  ): Promise<void> {
+    const user = await this.usersRepository.findOne({
+      where: { user_id },
+      relations: ['locations'],
+    });
+
+    if (user) {
+      const newFavLocations = user.locations.filter(
+        (location) => Number(location.location_id) !== Number(location_id),
+      );
+      await this.usersRepository.save({
+        ...user,
+        locations: newFavLocations,
+      });
+    }
   }
 }

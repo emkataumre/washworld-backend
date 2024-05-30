@@ -20,6 +20,14 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @Post(':user_id/:location_id')
+  addFavoriteLocation(
+    @Param('user_id') user_id: number,
+    @Param('location_id') location_id: number,
+  ) {
+    return this.usersService.addFavoriteLocation(user_id, location_id);
+  }
+
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -30,6 +38,11 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
+  @Get(':user_id/favorite_locations')
+  findAllFavoriteLocations(@Param('user_id') user_id: number) {
+    return this.usersService.findAllFavoriteLocations(user_id);
+  }
+
   @Put(':user_id')
   update(@Param('user_id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
@@ -38,5 +51,13 @@ export class UsersController {
   @Delete(':user_id')
   remove(@Param('user_id') id: string) {
     return this.usersService.remove(+id);
+  }
+
+  @Delete(':user_id/:location_id')
+  removeFavoriteLocation(
+    @Param('user_id') user_id: number,
+    @Param('location_id') location_id: number,
+  ) {
+    return this.usersService.removeFavoriteLocation(user_id, location_id);
   }
 }
