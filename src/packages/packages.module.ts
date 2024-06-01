@@ -8,7 +8,7 @@ import { Membership } from 'src/memberships/entities/membership.entity';
 @Module({
   controllers: [PackagesController],
   providers: [PackagesService],
-  imports: [TypeOrmModule.forFeature([Package, Membership])],
+  imports: [TypeOrmModule.forFeature([Package, Membership])], // Import the Package and Membership entities
   exports: [PackagesService],
 })
 export class PackagesModule {}

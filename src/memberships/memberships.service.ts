@@ -43,13 +43,13 @@ export class MembershipsService {
 
     let membership = user.memberships.find(
       (membership) => membership.membership_id == membership_id,
-    );
+    ); // Finds the membership with the specified membership_id
 
     if (membership) {
       membership = {
         ...membership,
         membership_price: Number(membership.membership_price),
-      };
+      }; // Converts the membership_price to a number
     }
 
     return membership;

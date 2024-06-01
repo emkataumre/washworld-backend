@@ -18,7 +18,16 @@ export class Location {
   @Column()
   address: string;
 
-  @Column({ type: 'decimal', precision: 9, scale: 6 })
+  @Column({
+    type: 'decimal',
+    precision: 9,
+    scale: 6,
+  })
+  /*
+   * This column is of type decimal with a precision of 9 and a scale of 6.
+   * This is required because only a decimal can store the latitude and longitude values of a location.
+   * These numbers are needed on the frontend to display the location on a map.
+   */
   latitude: number;
 
   @Column({ type: 'decimal', precision: 9, scale: 6 })

@@ -17,6 +17,10 @@ export class PackagesService {
       relations: ['package'],
     });
 
+    /*
+     * Here we are using the membershipRepository (imported in the module through the entity)
+     * to find the membership with the specified membership_id.
+     */
     return membership.package;
   }
 }

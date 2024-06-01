@@ -73,7 +73,7 @@ export class UsersService {
     if (user && location) {
       user.locations.push(location);
       await this.usersRepository.save(user);
-    }
+    } // Adds the location to the user's favorite locations
   }
 
   async findAllFavoriteLocations(user_id: number): Promise<any> {
@@ -96,21 +96,21 @@ export class UsersService {
 
     if (user) {
       const newFavLocations = user.locations.filter(
-        (location) => Number(location.location_id) !== Number(location_id),
+        (location) => Number(location.location_id) !== Number(location_id), // Removes the location with the specified location_id
       );
       await this.usersRepository.save({
         ...user,
         locations: newFavLocations,
-      });
+      }); // Removes the location from the user's favorite locations
     }
   }
 
   async saveDamageReport(user_id: number, damageReport: string): Promise<void> {
     const user: User = await this.findUser(user_id);
     if (user.damage_report) {
-      user.damage_report.push(damageReport);
+      user.damage_report.push(damageReport); // Adds the damage report to the user's damage reports
     } else {
-      user.damage_report = [damageReport];
+      user.damage_report = [damageReport]; // Creates a new array with the damage report
     }
     await this.usersRepository.save(user);
   }

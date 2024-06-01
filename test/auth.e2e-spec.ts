@@ -30,7 +30,6 @@ describe('AuthController (e2e)', () => {
       last_name: 'Doe',
       birthday: new Date('1990-01-01'),
       roles: [Role.User],
-      // add other fields as necessary
     };
 
     return request(app.getHttpServer())
@@ -48,12 +47,10 @@ describe('AuthController (e2e)', () => {
       last_name: 'Doe',
       birthday: new Date('1990-01-01'),
       roles: [Role.User],
-      // add other fields as necessary
     };
 
     await request(app.getHttpServer()).post('/auth/signup').send(newUser);
 
-    // Then, try to log in with the new user
     return request(app.getHttpServer())
       .post('/auth/login')
       .send({ email: 'test@gmail.com', password: '123' })

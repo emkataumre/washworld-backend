@@ -7,6 +7,6 @@ export class AppController {
 
   @Get()
   async getHello() {
-    return 'Hello World!'; //added
+    return 'Hello World!';
   }
 }

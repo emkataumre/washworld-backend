@@ -19,7 +19,7 @@ export class StatusesService {
 
   async findAllStatusesWithHalls(): Promise<Status[]> {
     const halls = await this.hallsService.findAll();
-    return halls.map((hall) => hall.status);
+    return halls.map((hall) => hall.status); // Extracts the status from each hall
   }
 
   async updateStatus(
@@ -27,7 +27,7 @@ export class StatusesService {
     newStatus: Partial<Status>, // Partial means all fields are marked as optional (?)
   ): Promise<Status> {
     const hall = await this.hallsService.findOne(hall_id);
-    hall.status = { ...hall.status, ...newStatus };
+    hall.status = { ...hall.status, ...newStatus }; // Merges the existing status with the new status
     await this.hallsRepo.save(hall);
     return hall.status;
   }

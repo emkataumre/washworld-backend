@@ -14,7 +14,7 @@ export class FeaturesService {
   async findAllForPackage(package_id: number): Promise<Feature[]> {
     const _package = await this.packagesRepository.findOne({
       where: { package_id },
-      relations: ['features'],
+      relations: ['features'], // Ensures the features relation is loaded
     });
 
     return _package.features;
@@ -23,12 +23,12 @@ export class FeaturesService {
   async findOneForPackge(package_id: number, feature_id: number) {
     const _package = await this.packagesRepository.findOne({
       where: { package_id },
-      relations: ['features'],
+      relations: ['features'], // Ensures the features relation is loaded
     });
 
     const feature = _package.features.find(
       (feature) => feature.feature_id == feature_id,
-    );
+    ); // Finds the feature with the specified feature_id
 
     return feature;
   }

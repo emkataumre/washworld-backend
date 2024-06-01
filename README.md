@@ -24,12 +24,12 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Nest](https://github.com/nestjs/nest) framework TypeScript server for the Wash World phone app.
 
 ## Installation
 
 ```bash
-$ npm install
+$ yarn
 ```
 
 ## Running the app
@@ -48,15 +48,20 @@ $ npm run start:prod
 ## Test
 
 ```bash
-# unit tests
-$ npm run test
-
 # e2e tests
 $ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
+
+## Features
+- Services that handle retrieving and posting information about users.
+- Services for managing locations, their halls, and statuses.
+- Information about memberships and their packages.
+- Service that returns a membership with its respective package and all the features included.
+- Role-based authorization.
+- JWT authentication.
+- Continuous integration with GitHub Actions.
+- Tests for authentication
+
 
 ## Support
 

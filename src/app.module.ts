@@ -18,8 +18,8 @@ import { dbConfig } from './data.source';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot(dbConfig),
+    ConfigModule.forRoot({ isGlobal: true }), // Load the .env file
+    TypeOrmModule.forRoot(dbConfig), // Connect to the database
     HallsModule,
     StatusesModule,
     UsersModule,

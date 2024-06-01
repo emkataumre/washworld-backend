@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import * as express from 'express';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(express.json({ limit: '50mb' }));
+  app.use(express.json({ limit: '50mb' })); // Sets the maximum request body size to 50mb, which was going to be used for image uploads (damage report images)
   await app.listen(3000);
 }
 bootstrap();

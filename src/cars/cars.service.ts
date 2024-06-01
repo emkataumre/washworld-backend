@@ -25,7 +25,7 @@ export class CarsService {
 
     const newCar = this.carsRepository.create({
       ...createCarDto,
-      user, // link the car to the user
+      user, // Assigns the user object to the user property of the new car object
     });
 
     return await this.carsRepository.save(newCar);
@@ -34,7 +34,7 @@ export class CarsService {
   async findAll(user_id: number): Promise<Car[]> {
     const allCars = await this.carsRepository.find({
       where: { user: { user_id: user_id } },
-      relations: ['user'], // ensures the user relation is loaded
+      relations: ['user'], // Ensures the user relation is loaded
     });
     return allCars;
   }
@@ -83,5 +83,5 @@ export class CarsService {
       where: { car_id: car_id, user: { user_id: user_id } },
       relations: ['user'],
     });
-  }
+  } // This method finds a car by its ID and the user ID of the user who owns the car
 }

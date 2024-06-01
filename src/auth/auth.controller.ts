@@ -29,7 +29,7 @@ export class AuthController {
     return this.authService.signUp(createUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard) // Only authenticated user can access this route
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;

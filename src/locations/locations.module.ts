@@ -12,7 +12,7 @@ import { SelfwashesModule } from 'src/selfwashes/selfwashes.module';
   imports: [
     TypeOrmModule.forFeature([Location]),
     forwardRef(() => HallsModule),
-    forwardRef(() => SelfwashesModule),
+    forwardRef(() => SelfwashesModule), // forwardRef to avoid circular dependency
   ],
   exports: [LocationsService],
 })

@@ -21,7 +21,7 @@ export class SelfwashesService {
     const selfwashesWithStatus = await Promise.all(
       location.selfwashes.map(async (selfwash) => {
         const status = await this.findOne(selfwash.selfwash_id);
-        return { ...selfwash, status_id: status.status.status_id };
+        return { ...selfwash, status_id: status.status.status_id }; // Adds the 'status_id' property to each 'Selfwash' entity
       }),
     );
 

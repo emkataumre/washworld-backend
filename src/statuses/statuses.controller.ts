@@ -21,8 +21,8 @@ export class StatusesController {
   }
 
   @Put(':hall_id')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard) // Protects the route with JWT authentication and role-based authorization (must be a logged-in user with the 'Admin' role)
+  @Roles(Role.Admin) // Only admins can update the status of a hall
   updateStatus(
     @Param('hall_id') hall_id: number,
     @Body() newStatus: Partial<Status>,

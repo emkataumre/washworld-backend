@@ -17,10 +17,10 @@ export class MembershipPackageFeaturesService {
       memberships.map(async (membership) => {
         const _package = await this.packagesService.findOneForMembership(
           membership.membership_id,
-        );
+        ); // Finds the package for each membership with the specified membership_id
         const features = await this.featuresService.findAllForPackage(
           _package.package_id,
-        );
+        ); // Finds the features for each package with the specified package_id
         return { ...membership, package: { ..._package, features } };
       }),
     );

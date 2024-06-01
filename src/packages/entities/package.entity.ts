@@ -33,6 +33,10 @@ export class Package {
       referencedColumnName: 'package_id',
     },
     inverseJoinColumn: {
+      /*
+       * The inverseJoinColumn is used in a many-to-many relationship to specify the column name of the other side of the relationship.
+       * Here, inverseJoinColumn is used to specify that the 'feature_id' column in the 'package_features' join table is used to reference the Feature entities.
+       */
       name: 'feature_id',
       referencedColumnName: 'feature_id',
     },
