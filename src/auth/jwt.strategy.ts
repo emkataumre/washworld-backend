@@ -33,5 +33,3 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return user;
   }
 }
-
-// Used for subsequent requests to validate the JWT from the header
