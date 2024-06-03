@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { LocationsService } from 'src/locations/locations.service';
+import { Location } from 'src/locations/entities/location.entity';
 
 @Injectable()
 export class UsersService {
@@ -63,7 +64,7 @@ export class UsersService {
   async addFavoriteLocation(
     user_id: number,
     location_id: number,
-  ): Promise<void> {
+  ): Promise<Location[]> {
     const user = await this.usersRepository.findOne({
       where: { user_id },
       relations: ['locations'],
@@ -74,9 +75,10 @@ export class UsersService {
       user.locations.push(location);
       await this.usersRepository.save(user);
     }
+    return user.locations;
   }
 
-  async findAllFavoriteLocations(user_id: number): Promise<any> {
+  async findAllFavoriteLocations(user_id: number): Promise<Location[]> {
     const user = await this.usersRepository.findOne({
       where: { user_id },
       relations: ['locations'],
@@ -88,7 +90,7 @@ export class UsersService {
   async removeFavoriteLocation(
     user_id: number,
     location_id: number,
-  ): Promise<void> {
+  ): Promise<Location[]> {
     const user = await this.usersRepository.findOne({
       where: { user_id },
       relations: ['locations'],
@@ -103,6 +105,7 @@ export class UsersService {
         locations: newFavLocations,
       });
     }
+    return user.locations;
   }
 
   async saveDamageReport(user_id: number, damageReport: string): Promise<void> {

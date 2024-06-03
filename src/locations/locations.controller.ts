@@ -1,11 +1,13 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { LocationsService } from './locations.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('locations')
 export class LocationsController {
   constructor(private readonly locationsService: LocationsService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.locationsService.findAll();
   }

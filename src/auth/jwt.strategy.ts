@@ -19,11 +19,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload) {
-    console.log('payload', payload);
+  async validate(payload: any): Promise<User> {
+    console.log('validate from jwt strategy payload', payload);
+    const user = await this.usersService.findOne(payload.sub);
+    if (!user) {
+      throw new UnauthorizedException();
+    }
 
-    return { user_id: payload.sub, user: payload.user };
+    return user;
   }
 }
-
-// Used for subsequent requests to validate the JWT from the header
