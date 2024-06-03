@@ -2,7 +2,6 @@ import {
   Injectable,
   UnauthorizedException,
   ConflictException,
-  InternalServerErrorException,
 } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
@@ -42,42 +41,17 @@ export class AuthService {
           memberships: null,
         });
 
-        const membership = await this.membershipsService.findAllForUser(
-          newUser.user_id,
-        );
         const userWithoutPassword = { ...newUser };
         delete userWithoutPassword.password;
-        const userWithMembership = { ...userWithoutPassword, membership };
 
-        const payload = { sub: newUser.user_id, user: userWithMembership };
+        const payload = { sub: newUser.user_id, user: userWithoutPassword };
         return {
           access_token: await this.jwtService.sign(payload),
-          user: userWithMembership,
+          user: userWithoutPassword,
         };
       } else {
         throw error;
       }
-    }
-  }
-
-  async validateUser(email: string, pass: string): Promise<any> {
-    try {
-      const user = await this.usersService.findOneByEmail(email.toLowerCase());
-      if (!user) {
-        throw new UnauthorizedException('User not found');
-      }
-
-      const isPasswordMatching = await bcrypt.compare(pass, user.password);
-      if (!isPasswordMatching) {
-        throw new UnauthorizedException('Invalid credentials');
-      }
-      const result = { ...user };
-      delete result.password;
-      return result;
-    } catch (error) {
-      throw new InternalServerErrorException(
-        'An error occurred while validating the user',
-      );
     }
   }
 
